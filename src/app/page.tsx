@@ -13,7 +13,7 @@ import * as S from "./styles";
 export default function Home() {
   const router = useRouter();
 
-  const [brandOptions, setbrandOptions] = useState<DataProps[]>([]);
+  const [brandOptions, setbrandOptions] = useState<any>([]);
   const [modelOptions, setModelOptions] = useState<DataProps[]>([]);
   const [yearOptions, setyearOptions] = useState<DataProps[]>([]);
 
@@ -37,12 +37,11 @@ export default function Home() {
   };
 
   const modelSelected = useCallback(
-    async (event: SelectChangeEvent) => {
-      setVehicleBrand(event.target.value);
+    async (event: SelectChangeEvent, newValue: DataProps) => {
+      setVehicleBrand(newValue.codigo);
       try {
-        const data = await api.get(
-          `carros/marcas/${event.target.value}/modelos`
-        );
+        const data = await api.get(`carros/marcas/${newValue.codigo}/modelos`);
+        console.log("modelSelected", data.data.modelos);
         setModelOptions(data.data.modelos);
       } catch (err) {
         console.log("ERRO MODELO =>", err);
@@ -52,12 +51,14 @@ export default function Home() {
   );
 
   const yearSelected = useCallback(
-    async (event: SelectChangeEvent) => {
-      setVehicleModel(event.target.value);
+    async (event: SelectChangeEvent, newValue: DataProps) => {
+      setVehicleModel(newValue.codigo);
       try {
         const data = await api.get(
-          `carros/marcas/${vehicleBrand}/modelos/${event.target.value}/anos`
+          `carros/marcas/${vehicleBrand}/modelos/${newValue.codigo}/anos`
         );
+        console.log("yearSelected", data.data);
+
         setyearOptions(data.data);
       } catch (err) {
         console.log("ERRO YEAR =>", err);
@@ -73,7 +74,7 @@ export default function Home() {
   useEffect(() => {
     resetFields();
     handleBrandOptions();
-  },[]);
+  }, []);
 
   return (
     <S.Container>
@@ -93,49 +94,31 @@ export default function Home() {
         <S.BoxCard>
           <CardComponent>
             <SelectComponent
-              id="brand"
-              title="Marca"
-              labelId="marca"
-              value={vehicleBrand}
+              options={brandOptions}
+              getOptionLabel={(option: any) => option.nome}
               label="Marca"
-              onChange={(event) => modelSelected(event)}
-            >
-              {brandOptions?.map((item: any) => (
-                <MenuItem key={item.codigo} value={item.codigo}>
-                  {item.nome}
-                </MenuItem>
-              ))}
-            </SelectComponent>
+              onChange={(event: any, newValue: any) =>
+                modelSelected(event, newValue)
+              }
+            />
             <SelectComponent
-              id="model"
-              title="Modelo"
-              labelId="modelo"
-              value={vehicleModel}
+              options={modelOptions}
+              getOptionLabel={(option: any) => option.nome}
               label="Modelo"
               disabled={!vehicleBrand}
-              onChange={(event) => yearSelected(event)}
-            >
-              {modelOptions?.map((item: any) => (
-                <MenuItem key={item.codigo} value={item.codigo}>
-                  {item.nome}
-                </MenuItem>
-              ))}
-            </SelectComponent>
+              onChange={(event: any, newValue: any) =>
+                yearSelected(event, newValue)
+              }
+            />
             {vehicleBrand && vehicleModel && (
               <SelectComponent
-                id="year"
-                title="Ano"
-                labelId="ano"
-                value={vehicleYear}
+                options={yearOptions}
+                getOptionLabel={(option: any) => option.nome}
                 label="Ano"
-                onChange={(event) => setVehicleYear(event.target.value)}
-              >
-                {yearOptions?.map((item: any) => (
-                  <MenuItem key={item.codigo} value={item.codigo}>
-                    {item.nome}
-                  </MenuItem>
-                ))}
-              </SelectComponent>
+                onChange={(event: any, newValue: any) =>
+                  setVehicleYear(newValue.codigo)
+                }
+              />
             )}
             <S.AlignBtn>
               <S.Btn

@@ -1,21 +1,14 @@
-import { SelectChangeEvent } from "@mui/material";
+import { SyntheticEvent } from "react";
 
 export type DataProps = {
-  data: [
-    {
-      codigo: number;
-      nome: string;
-    }
-  ];
+  codigo: string;
+  nome: string;
 };
 
 export type SelectProps = {
-  id: string;
-  title: string;
-  labelId: string;
-  value: string;
+  options: DataProps[];
   label: string;
   disabled?: boolean;
-  onChange: (e: SelectChangeEvent) => void;
-  children: React.ReactNode;
+  getOptionLabel: (option: DataProps) => string;
+  onChange: (e: SyntheticEvent<Element, Event>, value: DataProps[]) => void;
 };

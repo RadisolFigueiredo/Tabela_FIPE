@@ -45,7 +45,7 @@ export default function Result() {
       <S.BoxResult>
         <S.BoxAlign>
           <Typography variant="h5" fontWeight={600}>
-            Tabela Fipe: Preço {vehiclePrice?.Marca} {vehiclePrice?.Modelo}
+            Tabela Fipe: Preço {vehiclePrice?.Marca} {vehiclePrice?.Modelo} {''}
             {vehiclePrice?.AnoModelo}
           </Typography>
           <S.ChipValue label={vehiclePrice?.Valor} />
