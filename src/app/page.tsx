@@ -13,7 +13,7 @@ import * as S from "./styles";
 export default function Home() {
   const router = useRouter();
 
-  const [brandOptions, setbrandOptions] = useState<any>([]);
+  const [brandOptions, setbrandOptions] = useState<DataProps[]>([]);
   const [modelOptions, setModelOptions] = useState<DataProps[]>([]);
   const [yearOptions, setyearOptions] = useState<DataProps[]>([]);
 
@@ -39,9 +39,10 @@ export default function Home() {
   const modelSelected = useCallback(
     async (event: SelectChangeEvent, newValue: DataProps) => {
       setVehicleBrand(newValue.codigo);
+
+
       try {
         const data = await api.get(`carros/marcas/${newValue.codigo}/modelos`);
-        console.log("modelSelected", data.data.modelos);
         setModelOptions(data.data.modelos);
       } catch (err) {
         console.log("ERRO MODELO =>", err);
@@ -57,8 +58,6 @@ export default function Home() {
         const data = await api.get(
           `carros/marcas/${vehicleBrand}/modelos/${newValue.codigo}/anos`
         );
-        console.log("yearSelected", data.data);
-
         setyearOptions(data.data);
       } catch (err) {
         console.log("ERRO YEAR =>", err);

@@ -2,7 +2,7 @@
 
 import { useCallback, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import {Typography } from "@mui/material";
+import { Skeleton, Typography } from "@mui/material";
 import VehicleContext from "../context/vehicleDetail";
 import { api } from "../services/api";
 import * as S from "./styles";
@@ -21,6 +21,7 @@ export default function Result() {
     useContext(VehicleContext);
 
   const [vehiclePrice, setVehiclePrice] = useState<ResultProps>();
+  const [loading, setLoading] = useState(true);
 
   const handleResult = useCallback(async () => {
     try {
@@ -31,7 +32,8 @@ export default function Result() {
     } catch (err) {
       console.log("ERRO NO ANO", err);
     }
-  }, [vehicleBrand, vehicleModel, vehicleYear]);
+    if (vehiclePrice) return setLoading(false);
+  }, [vehicleBrand, vehicleModel, vehicleYear, vehiclePrice]);
 
   useEffect(() => {
     handleResult();
@@ -39,21 +41,34 @@ export default function Result() {
 
   return (
     <S.Container>
-      <S.Btn variant="text" onClick={() => router.push("/")}>
-        Voltar
-      </S.Btn>
-      <S.BoxResult>
-        <S.BoxAlign>
-          <Typography variant="h5" fontWeight={600}>
-            Tabela Fipe: Preço {vehiclePrice?.Marca} {vehiclePrice?.Modelo} {''}
-            {vehiclePrice?.AnoModelo}
-          </Typography>
-          <S.ChipValue label={vehiclePrice?.Valor} />
-          <Typography variant="caption">
-            Este é o preço de compra do veículo
-          </Typography>
-        </S.BoxAlign>
-      </S.BoxResult>
+      <>
+        <S.Btn variant="text" onClick={() => router.push("/")}>
+          Voltar
+        </S.Btn>
+        <S.BoxResult>
+          <S.BoxAlign>
+            {loading ? (
+              <>
+                <Skeleton width="60%" height="40px" />
+                <Skeleton variant="rounded" width={90} height={25} sx={{ mt: 3, mb: 3 }}/>
+                <Skeleton width="20%" sx={{ pt: 1 }} />
+              </>
+            ) : (
+              <>
+                <Typography variant="h5" fontWeight={600}>
+                  Tabela Fipe: Preço {vehiclePrice?.Marca}{" "}
+                  {vehiclePrice?.Modelo} {""}
+                  {vehiclePrice?.AnoModelo}
+                </Typography>
+                <S.ChipValue label={vehiclePrice?.Valor} />
+                <Typography variant="caption">
+                  Este é o preço de compra do veículo
+                </Typography>
+              </>
+            )}
+          </S.BoxAlign>
+        </S.BoxResult>
+      </>
     </S.Container>
   );
 }

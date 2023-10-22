@@ -1,9 +1,6 @@
 "use client";
 import { DataProps, SelectProps } from "@/app/types";
-import {
-  Autocomplete,
-  TextField,
-} from "@mui/material";
+import { Autocomplete, TextField } from "@mui/material";
 
 export default function SelectComponent({
   onChange,
@@ -17,7 +14,11 @@ export default function SelectComponent({
       options={options}
       sx={{ marginBottom: "20px" }}
       renderInput={(params) => (
-        <TextField {...params} label={label} variant="outlined" />
+        <TextField
+          {...params}
+          label={label}
+          variant="outlined"
+        />
       )}
       getOptionLabel={getOptionLabel}
       onChange={onChange}
