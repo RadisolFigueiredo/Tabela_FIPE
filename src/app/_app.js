@@ -4,8 +4,6 @@ import { StylesProvider } from '@mui/styles';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import GlobalStyle from '../../globalStyle'
 
-// import theme from '../theme'; // Crie seu próprio tema Material-UI
-
 function MyApp({ Component, pageProps }) {
   return (
     <StylesProvider injectFirst>
