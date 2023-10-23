@@ -29,6 +29,8 @@ export default function Home() {
   } = useContext(VehicleContext);
 
   const handleBrandOptions = async () => {
+    resetFields();
+
     try {
       const data = await api.get(`carros/marcas`);
       setbrandOptions(data.data);
@@ -75,7 +77,6 @@ export default function Home() {
   };
 
   useEffect(() => {
-    resetFields();
     handleBrandOptions();
   }, []);
 
