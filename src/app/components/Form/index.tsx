@@ -23,7 +23,7 @@ export default function SelectComponent({
       )}
       getOptionLabel={getOptionLabel}
       onChange={onChange}
-      disableClearable={true}
+      disableClearable
     />
   );
 }
