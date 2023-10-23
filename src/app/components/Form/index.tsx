@@ -17,13 +17,12 @@ export default function SelectComponent({
       loadingText="Carregando..."
       options={options}
       sx={{ marginBottom: "20px" }}
-      clearOnBlur={true}
       renderInput={(params) => (
         <TextField {...params} label={label} variant="outlined" />
       )}
       getOptionLabel={getOptionLabel}
       onChange={onChange}
-      disableClearable
+      clearIcon
     />
   );
 }
