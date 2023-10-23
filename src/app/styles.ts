@@ -23,6 +23,11 @@ export const AlignBtn = styled(Box)`
 `;
 
 export const Btn = styled(Button)`
+  && {
+    &:hover {
+      background-color: #6404c4;
+    }
+  }
   text-transform: none;
   background: #6404c4;
   display: flex;
