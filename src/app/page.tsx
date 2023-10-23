@@ -40,7 +40,6 @@ export default function Home() {
     async (event: SelectChangeEvent, newValue: DataProps) => {
       setVehicleBrand(newValue.codigo);
 
-
       try {
         const data = await api.get(`carros/marcas/${newValue.codigo}/modelos`);
         setModelOptions(data.data.modelos);

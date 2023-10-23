@@ -20,11 +20,11 @@ export const BoxResult = styled(Box)`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 50%;
-  height: 20%;
+  width: 55%;
+  height: 30%;
   background-color: #dcf5f2;
-  box-shadow: 24;
-  padding: 4;
+  box-shadow: 24px;
+  padding: 10px;
 `;
 
 export const BoxAlign = styled(Box)`
