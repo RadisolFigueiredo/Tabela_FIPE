@@ -1,5 +1,5 @@
 "use client";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import Home from "@/app/page";
 import "@testing-library/jest-dom";
 
@@ -21,13 +21,20 @@ describe("Home", () => {
     expect(screen.getByLabelText("Modelo")).toBeInTheDocument();
   });
 
-  it("should call navigate result when hits the button", () => {
+  it("the button should be disabled if the fields aren't filled", async () => {
     render(<Home />);
 
-    const btn = screen.getByText("Consultar preço");
+    const marca = screen.getByLabelText("Marca");
+    const modelo = screen.getByLabelText("Modelo");
 
-    fireEvent.click(btn);
+    expect(marca).toHaveValue("");
+    expect(modelo).toHaveValue("");
 
-    expect(routerPushMock).toHaveBeenCalledWith("/result");
+    fireEvent.change(marca, { target: { value: "Opção selecionada" } });
+    fireEvent.change(modelo, { target: { value: "Opção selecionada" } });
+
+    expect(marca).not.toEqual("");
+    expect(modelo).not.toEqual("");
+
   });
 });

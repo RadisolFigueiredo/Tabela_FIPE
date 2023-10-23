@@ -30,7 +30,7 @@ export default function Result() {
       );
       setVehiclePrice(data.data);
     } catch (err) {
-      console.log("ERRO NO ANO", err);
+      console.log("ERR NO YEAR", err);
     }
     if (vehiclePrice) return setLoading(false);
   }, [vehicleBrand, vehicleModel, vehicleYear, vehiclePrice]);
@@ -50,18 +50,27 @@ export default function Result() {
             {loading ? (
               <>
                 <Skeleton width="60%" height="40px" />
-                <Skeleton variant="rounded" width={90} height={25} sx={{ mt: 3, mb: 3 }}/>
+                <Skeleton
+                  variant="rounded"
+                  width={90}
+                  height={25}
+                  sx={{ mt: 3, mb: 3 }}
+                />
                 <Skeleton width="20%" sx={{ pt: 1 }} />
               </>
             ) : (
               <>
-                <Typography variant="h5" fontWeight={600}>
+                <Typography
+                  variant="h5"
+                  fontWeight={600}
+                  fontFamily="Roboto, sans-serif"
+                >
                   Tabela Fipe: Preço {vehiclePrice?.Marca}{" "}
                   {vehiclePrice?.Modelo} {""}
                   {vehiclePrice?.AnoModelo}
                 </Typography>
                 <S.ChipValue label={vehiclePrice?.Valor} />
-                <Typography variant="caption">
+                <Typography variant="caption" fontFamily="Roboto, sans-serif">
                   Este é o preço de compra do veículo
                 </Typography>
               </>

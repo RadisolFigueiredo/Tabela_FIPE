@@ -9,6 +9,7 @@ const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
   style: ["normal"],
+  variable: "--font-roboto",
 });
 
 export default function RootLayout({
@@ -21,7 +22,7 @@ export default function RootLayout({
       <body>
         <GlobalContext>
           <StyledComponentsRegistry>
-            <main className={roboto.className}>{children}</main>
+            <main className={roboto.variable}>{children}</main>
           </StyledComponentsRegistry>
         </GlobalContext>
       </body>

@@ -10,18 +10,20 @@ export default function SelectComponent({
 }: SelectProps) {
   return (
     <Autocomplete<DataProps, true>
+      openText="Abrir"
+      closeText="Fechar"
       disablePortal
+      noOptionsText="Sem opções"
+      loadingText="Carregando..."
       options={options}
       sx={{ marginBottom: "20px" }}
+      clearOnBlur={true}
       renderInput={(params) => (
-        <TextField
-          {...params}
-          label={label}
-          variant="outlined"
-        />
+        <TextField {...params} label={label} variant="outlined" />
       )}
       getOptionLabel={getOptionLabel}
       onChange={onChange}
+      disableClearable={true}
     />
   );
 }

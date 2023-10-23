@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useContext, useEffect, useState } from "react";
-import { Box, MenuItem, SelectChangeEvent, Typography } from "@mui/material";
+import { Box, SelectChangeEvent, Typography } from "@mui/material";
 import { api } from "./services/api";
 import VehicleContext from "./context/vehicleDetail";
 import { useRouter } from "next/navigation";
@@ -16,6 +16,7 @@ export default function Home() {
   const [brandOptions, setbrandOptions] = useState<DataProps[]>([]);
   const [modelOptions, setModelOptions] = useState<DataProps[]>([]);
   const [yearOptions, setyearOptions] = useState<DataProps[]>([]);
+  const [isBrandSelected, setIsBrandSelected] = useState(false);
 
   const {
     vehicleBrand,
@@ -32,22 +33,26 @@ export default function Home() {
       const data = await api.get(`carros/marcas`);
       setbrandOptions(data.data);
     } catch (err) {
-      console.log("ERRO BRAND =>", err);
+      console.log("ERR BRAND =>", err);
     }
   };
 
   const modelSelected = useCallback(
     async (event: SelectChangeEvent, newValue: DataProps) => {
+      if (isBrandSelected) {
+        resetFields();
+        setIsBrandSelected(false);
+      }
+      setIsBrandSelected(true);
       setVehicleBrand(newValue.codigo);
-
       try {
         const data = await api.get(`carros/marcas/${newValue.codigo}/modelos`);
         setModelOptions(data.data.modelos);
       } catch (err) {
-        console.log("ERRO MODELO =>", err);
+        console.log("ERR MODEL =>", err);
       }
     },
-    [setVehicleBrand]
+    [setVehicleBrand, resetFields, isBrandSelected]
   );
 
   const yearSelected = useCallback(
@@ -59,7 +64,7 @@ export default function Home() {
         );
         setyearOptions(data.data);
       } catch (err) {
-        console.log("ERRO YEAR =>", err);
+        console.log("ERR YEAR =>", err);
       }
     },
     [vehicleBrand, setVehicleModel]
@@ -83,10 +88,16 @@ export default function Home() {
           align="center"
           color="#444444"
           mb={1}
+          fontFamily="Roboto, sans-serif"
         >
           Tabela Fipe
         </Typography>
-        <Typography variant="h6" align="center" color="#444444">
+        <Typography
+          variant="h6"
+          align="center"
+          color="#444444"
+          fontFamily="Roboto, sans-serif"
+        >
           Consulte o valor de um veículo de forma gratuita
         </Typography>
         <S.BoxCard>

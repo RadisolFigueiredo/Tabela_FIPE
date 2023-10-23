@@ -6,6 +6,13 @@ import GlobalStyle from "../../globalStyle";
 import theme from "./theme";
 
 function MyApp({ Component, pageProps }) {
+
+  const theme = createTheme({
+    typography: {
+      fontFamily: "Roboto, sans-serif",
+    },
+  });
+  
   return (
     <StylesProvider injectFirst>
       <ThemeProvider theme={theme}>
