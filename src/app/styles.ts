@@ -24,6 +24,6 @@ export const AlignBtn = styled(Box)`
 
 export const Btn = styled(Button)`
   text-transform: none;
-  backgroun: #6404c4;
+  background: #6404c4;
   display: flex;
 `;
